@@ -19,7 +19,7 @@ from pydantic.json_schema import JsonSchemaValue
 logger = logging.getLogger(__name__)
 app = FastAPI(
     title="Ollama API Wrapper",
-    description="A FastAPI application that provides an interface to the Ollama API."
+    description="A FastAPI application that provides simple but high performance interface to the Ollama API."
 )
 
 
