@@ -5,7 +5,7 @@ This is the main entry point for the Ollama API Wrapper application.
 import logging
 import asyncio
 import multiprocessing
-from typing import Annotated
+from typing import Annotated, Optional
 
 import uvicorn
 from fastapi.responses import JSONResponse
@@ -28,10 +28,9 @@ class BaseSchema(BaseModel):
     Base schema for API requests.
     """
 
-    model_id: str
-    tools: list[Tool] | None = None
-    options: Options | None = None
-    format: JsonSchemaValue | None = None
+    model: str
+    options: Optional[Options] = None
+    format: Optional[JsonSchemaValue] = None
 
 
 class ChatSchema(BaseSchema):
@@ -40,6 +39,7 @@ class ChatSchema(BaseSchema):
     """
 
     messages: list[Message]
+    tools: Optional[list[Tool]] = None
 
 
 class GenerateSchema(BaseSchema):
