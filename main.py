@@ -136,7 +136,7 @@ async def generate(client: Annotated[AsyncClient, Depends(get_async_client)], re
     """
 
     response = await client.generate(**request.model_dump())
-    return JSONResponse(content=response.text)
+    return JSONResponse(content=response.model_dump())
 
 
 async def main():
