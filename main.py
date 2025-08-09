@@ -79,7 +79,7 @@ async def health_check(client: Annotated[AsyncClient, Depends(get_async_client)]
     return {"message": "Service is up and running!"}
 
 
-@app.get("/models", status_code=status.HTTP_200_OK)
+@app.get("/api/tags", status_code=status.HTTP_200_OK)
 async def list_models(client: Annotated[AsyncClient, Depends(get_async_client)]) -> JSONResponse:
     """
     Endpoint to list all available models.
@@ -95,7 +95,7 @@ async def list_models(client: Annotated[AsyncClient, Depends(get_async_client)])
     return JSONResponse(content={"models": list(map(lambda model: model.model, response.models))})
 
 
-@app.post("/chat", status_code=status.HTTP_200_OK)
+@app.post("/api/chat", status_code=status.HTTP_200_OK)
 async def chat(
     client: Annotated[AsyncClient, Depends(get_async_client)],
     request: ChatSchema
@@ -119,7 +119,7 @@ async def chat(
     return JSONResponse(content=response.message.model_dump())
 
 
-@app.post("/generate", status_code=status.HTTP_200_OK)
+@app.post("/api/generate", status_code=status.HTTP_200_OK)
 async def generate(client: Annotated[AsyncClient, Depends(get_async_client)], request: GenerateSchema) -> JSONResponse:
     """
     Endpoint for text generation with the model.
