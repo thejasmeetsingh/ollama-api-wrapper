@@ -29,6 +29,7 @@ class BaseSchema(BaseModel):
     """
 
     model: str
+    think: bool = False
     options: Optional[Options] = None
     format: Optional[JsonSchemaValue] = None
 
@@ -110,7 +111,8 @@ async def chat(
 
     Args:
         client (AsyncClient): An instance of the AsyncClient.
-        model_id (str): The ID of the model to use.
+        model (str): The ID of the model to use.
+        think (bool): should the model think before responding, Default to False.
         messages (list[Message]): A list of messages to send to the model.
         tools (list[Tool] | None, optional): A list of tools to use. Defaults to None.
         options (Options | None, optional): Options for the chat. Defaults to None.
@@ -131,7 +133,8 @@ async def generate(client: Annotated[AsyncClient, Depends(get_async_client)], re
 
     Args:
         client (AsyncClient): An instance of the AsyncClient.
-        model_id (str): The ID of the model to use.
+        model (str): The ID of the model to use.
+        think (bool): should the model think before responding, Default to False.
         prompt (str): The prompt to generate text from.
         options (Options | None, optional): Options for the generation. Defaults to None.
         format (JsonSchemaValue | None, optional): The format of the response. Defaults to None.
