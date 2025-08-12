@@ -5,7 +5,7 @@ This is the main entry point for the Ollama API Wrapper application.
 import logging
 import asyncio
 import multiprocessing
-from typing import Annotated, Optional
+from typing import Annotated, Optional, Any
 
 import uvicorn
 from fastapi.responses import JSONResponse
@@ -91,8 +91,13 @@ async def list_models(client: Annotated[AsyncClient, Depends(get_async_client)])
         JSONResponse: A response containing a list of available models.
     """
 
+    def format_model_response(model) -> dict[str, Any]:
+        model_dict = model.model_dump()
+        model_dict.update({"modified_at": model_dict["modified_at"].isoformat()})
+        return model_dict
+
     response = await client.list()
-    return JSONResponse(content={"models": list(map(lambda model: model.model, response.models))})
+    return JSONResponse(content={"models": list(map(format_model_response, response.models))})
 
 
 @app.post("/api/chat", status_code=status.HTTP_200_OK)
